@@ -28,10 +28,10 @@ else {
     else {
         die "ERROR: Can't find a program to download data.";
     }
-    $fetcher .= ' "https://raw.githubusercontent.com/zapret-info/z-i/master/dump.csv"';
+    $fetcher .= ' "https://raw.githubusercontent.com/zapret-info/z-i/master/dump.csv.gz"';
 }
 
-my @ips = `$fetcher | sed 1d | LC_CTYPE=C cut -d ';' -f 1 | tr "\\|" "\\n" | sed 's/^[ \\t]*//;s/[ \\t]*\$//'`;
+my @ips = `$fetcher | gunzip | sed 1d | LC_CTYPE=C cut -d ';' -f 1 | tr "\\|" "\\n" | sed 's/^[ \\t]*//;s/[ \\t]*\$//'`;
 
 my $whitelist;
 if (open $whitelist, "$scriptdir/white.list") {
